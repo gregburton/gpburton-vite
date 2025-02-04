@@ -8,92 +8,130 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 
 // Import Routes
 
-import { Route as rootRoute } from './routes/__root'
+import { Route as rootRoute } from "./routes/__root";
 
 // Create Virtual Routes
 
-const AboutLazyImport = createFileRoute('/about')()
-const IndexLazyImport = createFileRoute('/')()
+const WebsitesLazyImport = createFileRoute("/websites")();
+const NotesLazyImport = createFileRoute("/notes")();
+const GamingLazyImport = createFileRoute("/gaming")();
+const IndexLazyImport = createFileRoute("/")();
 
 // Create/Update Routes
 
-const AboutLazyRoute = AboutLazyImport.update({
-  id: '/about',
-  path: '/about',
+const WebsitesLazyRoute = WebsitesLazyImport.update({
+  id: "/websites",
+  path: "/websites",
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
+} as any).lazy(() => import("./routes/websites.lazy").then((d) => d.Route));
+
+const NotesLazyRoute = NotesLazyImport.update({
+  id: "/notes",
+  path: "/notes",
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import("./routes/notes.lazy").then((d) => d.Route));
+
+const GamingLazyRoute = GamingLazyImport.update({
+  id: "/gaming",
+  path: "/gaming",
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import("./routes/gaming.lazy").then((d) => d.Route));
 
 const IndexLazyRoute = IndexLazyImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+} as any).lazy(() => import("./routes/index.lazy").then((d) => d.Route));
 
 // Populate the FileRoutesByPath interface
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutLazyImport
-      parentRoute: typeof rootRoute
-    }
+    "/": {
+      id: "/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof IndexLazyImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/gaming": {
+      id: "/gaming";
+      path: "/gaming";
+      fullPath: "/gaming";
+      preLoaderRoute: typeof GamingLazyImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/notes": {
+      id: "/notes";
+      path: "/notes";
+      fullPath: "/notes";
+      preLoaderRoute: typeof NotesLazyImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/websites": {
+      id: "/websites";
+      path: "/websites";
+      fullPath: "/websites";
+      preLoaderRoute: typeof WebsitesLazyImport;
+      parentRoute: typeof rootRoute;
+    };
   }
 }
 
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexLazyRoute
-  '/about': typeof AboutLazyRoute
+  "/": typeof IndexLazyRoute;
+  "/gaming": typeof GamingLazyRoute;
+  "/notes": typeof NotesLazyRoute;
+  "/websites": typeof WebsitesLazyRoute;
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexLazyRoute
-  '/about': typeof AboutLazyRoute
+  "/": typeof IndexLazyRoute;
+  "/gaming": typeof GamingLazyRoute;
+  "/notes": typeof NotesLazyRoute;
+  "/websites": typeof WebsitesLazyRoute;
 }
 
 export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/': typeof IndexLazyRoute
-  '/about': typeof AboutLazyRoute
+  __root__: typeof rootRoute;
+  "/": typeof IndexLazyRoute;
+  "/gaming": typeof GamingLazyRoute;
+  "/notes": typeof NotesLazyRoute;
+  "/websites": typeof WebsitesLazyRoute;
 }
 
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about'
-  id: '__root__' | '/' | '/about'
-  fileRoutesById: FileRoutesById
+  fileRoutesByFullPath: FileRoutesByFullPath;
+  fullPaths: "/" | "/gaming" | "/notes" | "/websites";
+  fileRoutesByTo: FileRoutesByTo;
+  to: "/" | "/gaming" | "/notes" | "/websites";
+  id: "__root__" | "/" | "/gaming" | "/notes" | "/websites";
+  fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
-  IndexLazyRoute: typeof IndexLazyRoute
-  AboutLazyRoute: typeof AboutLazyRoute
+  IndexLazyRoute: typeof IndexLazyRoute;
+  GamingLazyRoute: typeof GamingLazyRoute;
+  NotesLazyRoute: typeof NotesLazyRoute;
+  WebsitesLazyRoute: typeof WebsitesLazyRoute;
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
-  AboutLazyRoute: AboutLazyRoute,
-}
+  GamingLazyRoute: GamingLazyRoute,
+  NotesLazyRoute: NotesLazyRoute,
+  WebsitesLazyRoute: WebsitesLazyRoute,
+};
 
 export const routeTree = rootRoute
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
 
 /* ROUTE_MANIFEST_START
 {
@@ -102,14 +140,22 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/about"
+        "/gaming",
+        "/notes",
+        "/websites"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
     },
-    "/about": {
-      "filePath": "about.lazy.tsx"
+    "/gaming": {
+      "filePath": "gaming.lazy.tsx"
+    },
+    "/notes": {
+      "filePath": "notes.lazy.tsx"
+    },
+    "/websites": {
+      "filePath": "websites.lazy.tsx"
     }
   }
 }

@@ -9,8 +9,14 @@ export default function Header() {
           <Link to="/" className="[&.active]:font-bold font-light text-xl">
             gpburton
           </Link>{" "}
-          <Link to="/about" className="[&.active]:font-bold">
-            About
+          <Link to="/websites" className="[&.active]:font-bold">
+            Websites
+          </Link>
+          <Link to="/gaming" className="[&.active]:font-bold">
+            Gaming
+          </Link>
+          <Link to="/notes" className="[&.active]:font-bold">
+            Notes
           </Link>
         </nav>
         <ThemeToggler />
