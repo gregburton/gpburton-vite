@@ -10,3 +10,10 @@ export type ThemeProviderState = {
   theme: Theme;
   setTheme: (theme: Theme) => void;
 };
+
+export type MdxFrontmatter = {
+  slug: string;
+  title: string;
+  date: string;
+  description: string;
+};
